@@ -20,15 +20,7 @@ services:
     command: [ "--config=/etc/otel-collector-config.yaml" ]
     volumes:
       - ./telemetry/opentelemetry/collector.yaml:/etc/otel-collector-config.yaml
+    environment:
+      - NEW_RELIC_LICENSE_KEY=${NEW_RELIC_LICENSE_KEY}
     ports:
       - "4318:4318" # OTLP HTTP receiver
-    depends_on:
-      - jaeger
-
-  jaeger:
-    image: jaegertracing/all-in-one:latest
-    environment:
-      - COLLECTOR_OTLP_ENABLED=true
-    ports:
-      - "16686:16686" # UI
-      - "4317:4317" # OTLP gRPC

@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otel-collector
+  namespace: sre-space
+  labels:
+    app: otel-collector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: otel-collector
+  template:
+    metadata:
+      labels:
+        app: otel-collector
+    spec:
+      serviceAccountName: otel-collector
+      containers:
+      - name: otel-collector
+        image: otel/opentelemetry-collector:latest
+        command: ["--config=/conf/otel-collector-config.yaml"]
+        env:
+        - name: NEW_RELIC_LICENSE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: newrelic-secrets
+              key: license-key
+        volumeMounts:
+        - name: otel-collector-config-vol
+          mountPath: /conf
+        ports:
+        - containerPort: 4317
+        - containerPort: 4318
+      volumes:
+      - name: otel-collector-config-vol
+        configMap:
+          name: otel-collector-conf
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: otel-collector
+  namespace: sre-space
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: otel-collector
+rules:
+- apiGroups: [""]
+  resources: ["pods", "namespaces", "nodes"]
+  verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: otel-collector
+subjects:
+- kind: ServiceAccount
+  name: otel-collector
+  namespace: sre-space
+roleRef:
+  kind: ClusterRole
+  name: otel-collector
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: otel-collector
+  namespace: sre-space
+spec:
+  selector:
+    app: otel-collector
+  ports:
+  - name: otlp-grpc
+    port: 4317
+    protocol: TCP
+    targetPort: 4317
+  - name: otlp-http
+    port: 4318
+    protocol: TCP
+    targetPort: 4318

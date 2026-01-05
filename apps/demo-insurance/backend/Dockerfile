@@ -9,6 +9,7 @@ RUN pip install \
     opentelemetry-api \
     opentelemetry-sdk \
     opentelemetry-instrumentation-fastapi \
+    opentelemetry-instrumentation-logging \
     opentelemetry-exporter-otlp
 
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]

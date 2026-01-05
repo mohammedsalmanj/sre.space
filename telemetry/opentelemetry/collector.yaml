@@ -3,17 +3,25 @@ receivers:
     protocols:
       http:
         endpoint: "0.0.0.0:4318"
+      grpc:
+        endpoint: "0.0.0.0:4317"
 
 exporters:
-  logging:
-    loglevel: debug
-  otlp:
-    endpoint: "jaeger:4317" # Sending to Jaeger via OTLP gRPC
-    tls:
-      insecure: true
+  otlp/newrelic:
+    endpoint: "otlp.nr-data.net:4317"
+    headers:
+      "api-key": "${env:NEW_RELIC_LICENSE_KEY}"
+  debug:
+    verbosity: detailed
 
 service:
   pipelines:
     traces:
       receivers: [otlp]
-      exporters: [logging, otlp]
+      exporters: [debug, otlp/newrelic]
+    metrics:
+      receivers: [otlp]
+      exporters: [debug, otlp/newrelic]
+    logs:
+      receivers: [otlp]
+      exporters: [debug, otlp/newrelic]
