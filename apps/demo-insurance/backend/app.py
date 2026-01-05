@@ -25,13 +25,24 @@ trace.get_tracer_provider().add_span_processor(
     BatchSpanProcessor(otlp_exporter)
 )
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(title="Insurance Backend")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # For demo purposes, allow all. In prod, specify the frontend URL.
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 FastAPIInstrumentor.instrument_app(app)
 
 @app.get("/")
 def root():
     return {"service": "insurance-backend", "status": "running"}
 
+@app.get("/login")
 @app.post("/login")
 def login():
     with tracer.start_as_current_span("CUJ-Login"):

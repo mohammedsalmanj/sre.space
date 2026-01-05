@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRE.Space Insure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Ionicons for icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body>
+
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+    </div>
+
+    <!-- TOAST NOTIFICATIONS -->
+    <div id="toast-container"></div>
+
+    <!-- LOGIN SCREEN -->
+    <section id="login-screen" class="screen active">
+        <div class="glass-card login-card">
+            <div class="logo-area">
+                <ion-icon name="planet-outline"></ion-icon>
+                <h1>SRE.Space Insure</h1>
+            </div>
+            <p class="subtitle">Reliability First Insurance Portal</p>
+
+            <form id="login-form">
+                <div class="input-group">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    <input type="email" placeholder="Email Address" value="demo@sureguard.ai" required>
+                </div>
+                <div class="input-group">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <input type="password" placeholder="Password" value="password123" required>
+                </div>
+                <button type="submit" class="cta-button">
+                    <span>Secure Login</span>
+                    <ion-icon name="arrow-forward-outline"></ion-icon>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- DASHBOARD SCREEN -->
+    <section id="dashboard-screen" class="screen hidden">
+        <nav class="navbar">
+            <div class="nav-logo">
+                <ion-icon name="planet"></ion-icon>
+                <span>SRE.Space Insure</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active">Overview</a>
+                <a href="#">Policies</a>
+                <a href="#">Claims</a>
+            </div>
+            <div class="nav-profile">
+                <div class="avatar">JD</div>
+                <span>John Doe</span>
+                <button id="logout-btn" class="icon-btn"><ion-icon name="log-out-outline"></ion-icon></button>
+            </div>
+        </nav>
+
+        <main class="dashboard-content">
+            <header class="page-header">
+                <h2>Welcome back, John</h2>
+                <p>Here is your coverage overview.</p>
+            </header>
+
+            <div class="dashboard-grid">
+                <!-- POLICY CARD -->
+                <div class="glass-card policy-card">
+                    <div class="card-header">
+                        <h3><ion-icon name="document-text-outline"></ion-icon> Active Policy</h3>
+                        <span class="status-badge active">Active</span>
+                    </div>
+                    <div class="card-body" id="policy-details">
+                        <div class="loader">Loading policy...</div>
+                        <!-- Content injected by JS -->
+                    </div>
+                    <div class="card-footer">
+                        <small>Renewal: Dec 31, 2026</small>
+                    </div>
+                </div>
+
+                <!-- ACTIONS CARD -->
+                <div class="glass-card actions-card">
+                    <div class="card-header">
+                        <h3><ion-icon name="flash-outline"></ion-icon> Quick Actions</h3>
+                    </div>
+                    <div class="actions-grid">
+                        <button class="action-btn" id="file-claim-btn">
+                            <div class="icon-box warning">
+                                <ion-icon name="alert-circle-outline"></ion-icon>
+                            </div>
+                            <span>File a Claim</span>
+                        </button>
+                        <button class="action-btn" id="pay-premium-btn">
+                            <div class="icon-box success">
+                                <ion-icon name="card-outline"></ion-icon>
+                            </div>
+                            <span>Pay Premium</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ACTIVITY FEED -->
+                <div class="glass-card activity-card">
+                    <div class="card-header">
+                        <h3><ion-icon name="time-outline"></ion-icon> Recent Activity</h3>
+                    </div>
+                    <ul class="activity-list" id="activity-list">
+                        <!-- Populated by JS -->
+                        <li class="activity-item">
+                            <div class="dot"></div>
+                            <div class="activity-text">
+                                <strong>System Online</strong>
+                                <small>Just now</small>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
