@@ -1,0 +1,7 @@
+version: "3.9"
+
+services:
+  insurance-api:
+    build: ./apps/demo-insurance/backend
+    ports:
+      - "8000:8000"
