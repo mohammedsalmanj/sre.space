@@ -5,3 +5,13 @@ services:
     build: ./apps/demo-insurance/backend
     ports:
       - "8000:8000"
+    depends_on:
+      - otel-collector
+
+  otel-collector:
+    image: otel/opentelemetry-collector:latest
+    command: [ "--config=/etc/otel-collector-config.yaml" ]
+    volumes:
+      - ./telemetry/opentelemetry/collector.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4318:4318"
